@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PracticaListView</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="titulo">CONTROL DE MASCOTAS</string>
+    <string name="borrar">Borrar mascota</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="anadir">Añadir mascota</string>
+    <string name="nombre">Nombre:</string>
+    <string name="raza">Raza:</string>
+    <string name="especie">Especie:</string>
+    <string name="perro">Perro</string>
+    <string name="gato">Gato</string>
+    <string name="conejo">Conejo</string>
+    <string name="pajaro">Pájaro</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="modificar">Modificar</string>
+    <string name="biografia">Biografía:</string>
+    <string name="bio">Biografía</string>
+
+</resources>

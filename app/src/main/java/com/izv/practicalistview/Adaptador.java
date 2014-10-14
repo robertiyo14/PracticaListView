@@ -1,0 +1,93 @@
+package com.izv.practicalistview;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+/**
+ * Created by rober on 07/10/2014.
+ */
+public class Adaptador extends ArrayAdapter<String> {
+
+    private Context contexto;
+    private ArrayList<Mascota> mascotas;
+    private int recurso;
+    static LayoutInflater i;
+
+
+    public static class ViewHolder{
+        public TextView tv1, tv2, tv3, tv4;
+        public int posicion;
+        public ImageView iv;
+    }
+
+    public Adaptador(Context context, int resource, ArrayList mascotas) {
+        super(context, resource, mascotas);
+        this.contexto=context;
+        this.mascotas=mascotas;
+        this.recurso=resource;
+        this.i = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder vh;
+        if(convertView == null){
+            convertView = i.inflate(recurso, null);
+            vh = new ViewHolder();
+            vh.tv1=(TextView)convertView.findViewById(R.id.tvNombre);
+            vh.tv2=(TextView)convertView.findViewById(R.id.tvEspecie);
+            vh.tv3=(TextView)convertView.findViewById(R.id.tvRaza);
+            //vh.tv4=(TextView)convertView.findViewById(R.id.tvBiografia);
+            vh.iv = (ImageView)convertView.findViewById(R.id.ivImagen);
+            convertView.setTag(vh);
+        }else{
+            vh=(ViewHolder)convertView.getTag();
+        }
+        //String s=vh.tv1.getText().toString();
+        vh.posicion = position;
+        vh.tv1.setText(mascotas.get(position).getNombre());
+        vh.tv2.setText(mascotas.get(position).getEspecie());
+        vh.tv3.setText(mascotas.get(position).getRaza());
+        //vh.tv4.setText(mascotas.get(position).getBiografia());
+        Mascota m = mascotas.get(position);
+        if(m.getEspecie().equals(R.string.perro)){vh.iv.setImageResource(R.drawable.perro);}
+        if(m.getEspecie().equals(R.string.gato)){vh.iv.setImageResource(R.drawable.gato);}
+        if(m.getEspecie().equals(R.string.conejo)){vh.iv.setImageResource(R.drawable.conejo);}
+        if(m.getEspecie().equals(R.string.pajaro)){vh.iv.setImageResource(R.drawable.pajaro);}
+        vh.iv.setTag(position);
+        return convertView;
+
+    }
+    /*
+    private void borrar(final int elemento){
+        AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
+        alert.setTitle(R.string.titulo);
+        LayoutInflater inflater = LayoutInflater.from(contexto);
+        alert.setPositiveButton(R.string.aceptar,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        lista.remove(elemento);
+                        notifyDataSetChanged();
+
+                    }
+                });
+        alert.setNegativeButton("cancelar",null);
+        alert.show();
+    }
+    */
+}

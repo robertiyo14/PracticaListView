@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvNo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="10dp"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/especie"
+        android:id="@+id/tvEspecie"
+        android:layout_below="@+id/tvNo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/raza"
+        android:id="@+id/tvRaza"
+        android:textSize="20dp"
+        android:layout_below="@+id/tvEspecie"
+        android:layout_alignRight="@+id/tvEspecie"
+        android:layout_alignEnd="@+id/tvEspecie"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tvEsp"
+        android:layout_alignBottom="@+id/tvEspecie"
+        android:layout_toRightOf="@+id/tvEspecie"
+        android:layout_toEndOf="@+id/tvEspecie"
+        android:layout_marginLeft="25dp"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tvRaz"
+
+        android:layout_alignBottom="@+id/tvRaza"
+        android:layout_alignLeft="@+id/tvEsp"
+        android:layout_alignStart="@+id/tvEsp"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:src="#ff000000"
+        android:layout_below="@+id/tvRaza"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/biografia"
+        android:id="@+id/tvBiografia"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:textSize="25dp"
+        android:textStyle="bold|italic"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/tvBio"
+        android:layout_below="@+id/tvBiografia"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignLeft="@+id/tvEspecie"
+        android:layout_alignStart="@+id/tvEspecie"
+        android:layout_marginLeft="0dp" />
+
+</RelativeLayout>
