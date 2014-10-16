@@ -1,20 +1,14 @@
 package com.izv.practicalistview;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by rober on 07/10/2014.
@@ -70,7 +64,7 @@ public class Adaptador extends ArrayAdapter<String> {
         //vh.tv4.setText(mascotas.get(position).getBiografia());
 
         if(mascotas.get(position).getEspecie().equals(e[0])){
-            vh.iv.setImageResource(R.drawable.perro);
+            vh.iv.setImageResource(R.drawable.perro1);
         }
         if(mascotas.get(position).getEspecie().equals(e[1])){
             vh.iv.setImageResource(R.drawable.gato);
@@ -79,7 +73,7 @@ public class Adaptador extends ArrayAdapter<String> {
             vh.iv.setImageResource(R.drawable.conejo);
         }
         if(mascotas.get(position).getEspecie().equals(e[3])){
-            vh.iv.setImageResource(R.drawable.pajaro);
+            vh.iv.setImageResource(R.drawable.pajaro1);
         }
         vh.iv.setTag(position);
         return convertView;
