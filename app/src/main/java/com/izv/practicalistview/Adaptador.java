@@ -25,7 +25,7 @@ public class Adaptador extends ArrayAdapter<String> {
     private ArrayList<Mascota> mascotas;
     private int recurso;
     static LayoutInflater i;
-
+    static String[] e;
 
     public static class ViewHolder{
         public TextView tv1, tv2, tv3, tv4;
@@ -33,6 +33,9 @@ public class Adaptador extends ArrayAdapter<String> {
         public ImageView iv;
     }
 
+    public void setE(String[] e){
+        this.e =e;
+    }
     public Adaptador(Context context, int resource, ArrayList mascotas) {
         super(context, resource, mascotas);
         this.contexto=context;
@@ -45,6 +48,7 @@ public class Adaptador extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
+
         if(convertView == null){
             convertView = i.inflate(recurso, null);
             vh = new ViewHolder();
@@ -63,11 +67,19 @@ public class Adaptador extends ArrayAdapter<String> {
         vh.tv2.setText(mascotas.get(position).getEspecie());
         vh.tv3.setText(mascotas.get(position).getRaza());
         //vh.tv4.setText(mascotas.get(position).getBiografia());
-        Mascota m = mascotas.get(position);
-        if(m.getEspecie().equals(R.string.perro)){vh.iv.setImageResource(R.drawable.perro);}
-        if(m.getEspecie().equals(R.string.gato)){vh.iv.setImageResource(R.drawable.gato);}
-        if(m.getEspecie().equals(R.string.conejo)){vh.iv.setImageResource(R.drawable.conejo);}
-        if(m.getEspecie().equals(R.string.pajaro)){vh.iv.setImageResource(R.drawable.pajaro);}
+
+        if(mascotas.get(position).getEspecie().equals(e[0])){
+            vh.iv.setImageResource(R.drawable.perro);
+        }
+        if(mascotas.get(position).getEspecie().equals(e[1])){
+            vh.iv.setImageResource(R.drawable.gato);
+        }
+        if(mascotas.get(position).getEspecie().equals(e[2])){
+            vh.iv.setImageResource(R.drawable.conejo);
+        }
+        if(mascotas.get(position).getEspecie().equals(e[3])){
+            vh.iv.setImageResource(R.drawable.pajaro);
+        }
         vh.iv.setTag(position);
         return convertView;
 

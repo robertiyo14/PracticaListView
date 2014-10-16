@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ivImagen"
-        android:src="@drawable/ic_launcher"
+        android:src="@drawable/pajaro"
         android:layout_alignBottom="@+id/tvEspecie" />
 
     <TextView

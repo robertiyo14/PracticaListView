@@ -132,8 +132,11 @@ public class Principal extends Activity {
             mascotas.add(m);
         }
         ad= new Adaptador(this, R.layout.lista_detalle,mascotas);
+        String[] e = {getString(R.string.perro),getString(R.string.gato),getString(R.string.conejo),getString(R.string.pajaro)};
+        ad.setE(e);
         final ListView lv = (ListView) findViewById(R.id.lvLista);
         lv.setAdapter(ad);
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -144,15 +147,15 @@ public class Principal extends Activity {
                 LayoutInflater inflater = LayoutInflater.from(view.getContext());
                 View vista = inflater.inflate(R.layout.info, null);
                 alert.setView(vista);
-                //TextView nombre, especie, raza, biografia;
-                TextView nombre=(TextView)findViewById(R.id.tvNo);
-                //especie=(TextView)findViewById(R.id.tvEsp);
-                //raza=(TextView)findViewById(R.id.tvRaz);
-                //biografia=(TextView)findViewById(R.id.tvBio);
-                nombre.setText(mascotas.get(i).getNombre());
-                //especie.setText("hola");
-                //raza.setText("hola");
-                //biografia.setText("hola");
+                TextView nombre, especie, raza, biografia;
+                nombre=(TextView)vista.findViewById(R.id.tvNo);
+                especie=(TextView)vista.findViewById(R.id.tvEsp);
+                raza=(TextView)vista.findViewById(R.id.tvRaz);
+                biografia=(TextView)vista.findViewById(R.id.tvBio);
+                nombre.setText(mascotas.get(i).getNombre().toString());
+                especie.setText(mascotas.get(i).getEspecie());
+                raza.setText(mascotas.get(i).getRaza());
+                biografia.setText(mascotas.get(i).getBiografia());
                 alert.show();
             }
         });
