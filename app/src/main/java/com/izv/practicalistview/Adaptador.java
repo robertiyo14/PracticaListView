@@ -36,6 +36,7 @@ public class Adaptador extends ArrayAdapter<String> {
     public void setE(String[] e){
         this.e =e;
     }
+
     public Adaptador(Context context, int resource, ArrayList mascotas) {
         super(context, resource, mascotas);
         this.contexto=context;
@@ -84,22 +85,4 @@ public class Adaptador extends ArrayAdapter<String> {
         return convertView;
 
     }
-    /*
-    private void borrar(final int elemento){
-        AlertDialog.Builder alert = new AlertDialog.Builder(contexto);
-        alert.setTitle(R.string.titulo);
-        LayoutInflater inflater = LayoutInflater.from(contexto);
-        alert.setPositiveButton(R.string.aceptar,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-
-                        lista.remove(elemento);
-                        notifyDataSetChanged();
-
-                    }
-                });
-        alert.setNegativeButton("cancelar",null);
-        alert.show();
-    }
-    */
 }

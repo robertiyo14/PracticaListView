@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ivImagen"
-        android:src="@drawable/pajaro"
+        android:src="@drawable/gato"
         android:layout_alignBottom="@+id/tvEspecie" />
 
     <TextView
@@ -19,7 +19,8 @@
         android:id="@+id/tvNombre"
         android:text="Nerón"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="#ff000000" />
 
 
 
@@ -29,7 +30,8 @@
         android:layout_below="@id/tvNombre"
         android:layout_height="wrap_content"
         android:text="Perro"
-        android:id="@+id/tvRaza" />
+        android:id="@+id/tvRaza"
+        android:textColor="#ff000000" />
 
     <TextView
         android:layout_width="match_parent"
@@ -38,5 +40,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvEspecie"
         android:text="Pastor alemán"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:textColor="#ff000000" />
 </RelativeLayout>
