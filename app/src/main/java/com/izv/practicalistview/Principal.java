@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Xml;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,7 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
+import org.xmlpull.v1.XmlSerializer;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,10 +43,10 @@ public class Principal extends Activity {
 
     private ArrayList<Mascota> mascotas = new ArrayList<Mascota>();
     private Adaptador ad;
-    String nombres[] = {"Nerón","Zira","Puerta"};
+    /*String nombres[] = {"Nerón","Zira","Puerta"};
     String especies[] = {"Perro","Gato","Conejo"};
     String razas[]={"Pastor alemán","Otra","Angora"};
-    String biografias[]={"Biografía del perro","Biografía del gato","Biografía del conejo"};
+    String biografias[]={"Biografía del perro","Biografía del gato","Biografía del conejo"};*/
 
     /***********************************************************************************/
     /***********************************************************************************/
@@ -56,6 +61,7 @@ public class Principal extends Activity {
         if(id==R.id.action_borrar){
             mascotas.remove(index);
             ordenar();
+            guardar();
         }else if(id==R.id.action_modificar){
             modificar(index);
         }
@@ -134,6 +140,7 @@ public class Principal extends Activity {
                         m.setBiografia(biografia);
                         mascotas.add(m);
                         ordenar();
+                        guardar();
 
                     }
                 });
@@ -181,6 +188,7 @@ public class Principal extends Activity {
                             m.setBiografia(et3.getText().toString());
                             mascotas.set(index, m);
                             ordenar();
+                            guardar();
                         }
 
                     }
@@ -199,14 +207,14 @@ public class Principal extends Activity {
     /***********************************************************************************/
 
     private void initComponents(){
-        for (int i = 0; i < nombres.length; i++) {
+        /*for (int i = 0; i < nombres.length; i++) {
             String s=nombres[i];
             String s1=especies[i];
             String s2=razas[i];
             Mascota m = new Mascota(s,s1,s2);
             m.setBiografia(biografias[i]);
             mascotas.add(m);
-        }
+        }*/
         ad= new Adaptador(this, R.layout.lista_detalle,mascotas);
         String[] e = {getString(R.string.perro),getString(R.string.gato),getString(R.string.conejo),getString(R.string.pajaro)};
         ad.setE(e);
@@ -216,8 +224,6 @@ public class Principal extends Activity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Object o = view.getTag();
-                Adaptador.ViewHolder vh = (Adaptador.ViewHolder) o;
                 AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
                 //alert.setTitle(getResources().getString(R.string.new_event));
                 LayoutInflater inflater = LayoutInflater.from(view.getContext());
@@ -249,5 +255,59 @@ public class Principal extends Activity {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savingInstanceState) {
+        super.onSaveInstanceState(savingInstanceState);
+        savingInstanceState.putSerializable("mascotas", mascotas);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mascotas = (ArrayList<Mascota>) savedInstanceState.getSerializable("mascotas");
+        ad= new Adaptador(this, R.layout.lista_detalle,mascotas);
+        String[] e = {getString(R.string.perro),getString(R.string.gato),getString(R.string.conejo),getString(R.string.pajaro)};
+        ad.setE(e);
+        final ListView lv = (ListView) findViewById(R.id.lvLista);
+        lv.setAdapter(ad);
+        ad.notifyDataSetChanged();
+    }
+
+    public void guardar(){
+        try{
+            FileOutputStream fosxml= new FileOutputStream(new File(getExternalFilesDir(null),"mascotas.xml"));
+            XmlSerializer docxml = Xml.newSerializer();
+            docxml.setOutput(fosxml, "UTF-8");
+            docxml.startDocument(null, Boolean.valueOf(true));
+            docxml.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
+            docxml.startTag(null, "mascotas");
+            for (Mascota m : mascotas) {
+                docxml.startTag(null, "mascota");
+                docxml.startTag(null, "nombre");
+                docxml.text(m.getNombre());
+                docxml.endTag(null, "nombre");
+                docxml.startTag(null, "especie");
+                docxml.text(m.getEspecie());
+                docxml.endTag(null, "especie");
+                docxml.startTag(null, "raza");
+                docxml.text(m.getRaza());
+                docxml.endTag(null, "raza");
+                docxml.startTag(null, "biografia");
+                docxml.text(m.getBiografia());
+                docxml.endTag(null, "biografia");
+                docxml.endTag(null, "mascota");
+            }
+            docxml.endDocument();
+            docxml.flush();
+            fosxml.close();
+        }catch (Exception e){
+        }
+
+
+    }
+
+    public void cargar(){
+
+    }
 
 }
