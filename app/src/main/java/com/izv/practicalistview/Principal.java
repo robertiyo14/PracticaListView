@@ -3,6 +3,7 @@ package com.izv.practicalistview;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,6 +47,8 @@ public class Principal extends Activity {
 
     private ArrayList<Mascota> mascotas = new ArrayList<Mascota>();
     private Adaptador ad;
+    private static final int CREAR=0;
+    private static final int MODIFICAR=1;
     /*String nombres[] = {"Nerón","Zira","Puerta"};
     String especies[] = {"Perro","Gato","Conejo"};
     String razas[]={"Pastor alemán","Otra","Angora"};
@@ -57,6 +60,42 @@ public class Principal extends Activity {
     /***********************************************************************************/
     /***********************************************************************************/
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==Activity.RESULT_OK){
+            String nombre = data.getStringExtra("nombre");
+            String especie = data.getStringExtra("especie");
+            String raza = data.getStringExtra("raza");
+            String biografia = data.getStringExtra("biografia");
+            int index = data.getIntExtra("index",-1);
+            Mascota m = new Mascota(nombre,especie,raza);
+            m.setBiografia(biografia);
+
+            switch (requestCode){
+                case CREAR:
+                    //Hago cosas
+                    if(!mascotas.contains(m)){
+                        mascotas.add(m);
+                        ordenar();
+                    }else{
+                        Toast.makeText(this,R.string.mascotaRepe,Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                case MODIFICAR:
+                    //Hago cosas
+                    if(!mascotas.contains(m)){
+                        mascotas.set(index, m);
+                        ordenar();
+                    }else{
+                        Toast.makeText(this,R.string.mascotaRepe,Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+            }
+        }else {
+        }
+    }
+
     public boolean onContextItemSelected(MenuItem item) {
         int id=item.getItemId();
         final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -66,7 +105,12 @@ public class Principal extends Activity {
             ordenar();
             guardar();
         }else if(id==R.id.action_modificar){
-            modificar(index);
+            Intent i = new Intent(this,Formulario.class);
+            Bundle b = new Bundle();
+            b.putSerializable("mascota", mascotas.get(index));
+            b.putInt("index", index);
+            i.putExtras(b);
+            startActivityForResult(i, MODIFICAR);
         }
         return super.onContextItemSelected(item);
     }
@@ -93,6 +137,12 @@ public class Principal extends Activity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        guardar();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle savingInstanceState) {
         super.onSaveInstanceState(savingInstanceState);
         savingInstanceState.putSerializable("mascotas", mascotas);
@@ -113,9 +163,9 @@ public class Principal extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
-
         if(id==R.id.action_anadir){
-            anadir();
+            Intent i = new Intent(this,Formulario.class);
+            startActivityForResult(i, CREAR);
         }
         return super.onContextItemSelected(item);
     }

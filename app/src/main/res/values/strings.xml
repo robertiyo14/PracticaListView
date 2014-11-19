@@ -19,5 +19,7 @@
     <string name="modificar">Modificar</string>
     <string name="biografia">Biografía:</string>
     <string name="bio">Biografía</string>
+    <string name="mascotaRepe">Lo sientento, esa mascota ya está registrada.\n Por favor, introduzca otra.</string>
+    <string name="title_activity_formulario">Formulario</string>
 
 </resources>
