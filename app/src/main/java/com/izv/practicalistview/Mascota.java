@@ -64,8 +64,6 @@ public class Mascota implements Comparable<Mascota>{
 
     @Override
     public int compareTo(Mascota mascota) {
-        if(this.equals(mascota))
-            return 0;
         if(this.getNombre().compareTo(mascota.getNombre())!=0)
             return this.getNombre().compareTo(mascota.getNombre());
         if(this.getEspecie().compareTo(mascota.getEspecie())!=0)

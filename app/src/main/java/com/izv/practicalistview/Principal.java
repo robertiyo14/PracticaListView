@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.util.Xml;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -24,9 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
+import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -87,6 +90,24 @@ public class Principal extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.principal, menu);
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savingInstanceState) {
+        super.onSaveInstanceState(savingInstanceState);
+        savingInstanceState.putSerializable("mascotas", mascotas);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mascotas = (ArrayList<Mascota>) savedInstanceState.getSerializable("mascotas");
+        ad= new Adaptador(this, R.layout.lista_detalle,mascotas);
+        String[] e = {getString(R.string.perro),getString(R.string.gato),getString(R.string.conejo),getString(R.string.pajaro)};
+        ad.setE(e);
+        final ListView lv = (ListView) findViewById(R.id.lvLista);
+        lv.setAdapter(ad);
+        ad.notifyDataSetChanged();
     }
 
     @Override
@@ -215,6 +236,7 @@ public class Principal extends Activity {
             m.setBiografia(biografias[i]);
             mascotas.add(m);
         }*/
+        cargar();
         ad= new Adaptador(this, R.layout.lista_detalle,mascotas);
         String[] e = {getString(R.string.perro),getString(R.string.gato),getString(R.string.conejo),getString(R.string.pajaro)};
         ad.setE(e);
@@ -255,24 +277,6 @@ public class Principal extends Activity {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle savingInstanceState) {
-        super.onSaveInstanceState(savingInstanceState);
-        savingInstanceState.putSerializable("mascotas", mascotas);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mascotas = (ArrayList<Mascota>) savedInstanceState.getSerializable("mascotas");
-        ad= new Adaptador(this, R.layout.lista_detalle,mascotas);
-        String[] e = {getString(R.string.perro),getString(R.string.gato),getString(R.string.conejo),getString(R.string.pajaro)};
-        ad.setE(e);
-        final ListView lv = (ListView) findViewById(R.id.lvLista);
-        lv.setAdapter(ad);
-        ad.notifyDataSetChanged();
-    }
-
     public void guardar(){
         try{
             FileOutputStream fosxml= new FileOutputStream(new File(getExternalFilesDir(null),"mascotas.xml"));
@@ -281,7 +285,7 @@ public class Principal extends Activity {
             docxml.startDocument(null, Boolean.valueOf(true));
             docxml.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
             docxml.startTag(null, "mascotas");
-            for (Mascota m : mascotas) {
+            for (Mascota m:mascotas) {
                 docxml.startTag(null, "mascota");
                 docxml.startTag(null, "nombre");
                 docxml.text(m.getNombre());
@@ -297,6 +301,7 @@ public class Principal extends Activity {
                 docxml.endTag(null, "biografia");
                 docxml.endTag(null, "mascota");
             }
+            docxml.endTag(null,"mascotas");
             docxml.endDocument();
             docxml.flush();
             fosxml.close();
@@ -306,8 +311,48 @@ public class Principal extends Activity {
 
     }
 
-    public void cargar(){
+    public void cargar (){
+        try {
+            XmlPullParser lectorxml = Xml.newPullParser();
+            lectorxml.setInput(new FileInputStream(new File(getExternalFilesDir(null), "mascotas.xml")), "utf-8");
+            int evento = lectorxml.getEventType();
+            Mascota m = new Mascota();
+            String nombre="";
+            String especie="";
+            String raza="";
+            String biografia="";
+            while(evento != XmlPullParser.END_DOCUMENT){
+                if(evento == XmlPullParser.START_TAG){
+                    String etiqueta = lectorxml.getName();
+                    String texto="";
+                    if(etiqueta.compareTo("nombre")==0){
+                        m.setNombre(lectorxml.nextText());
+                        nombre=texto;
+                    }
+                    if(etiqueta.compareTo("especie")==0){
+                        m.setEspecie(lectorxml.nextText());
+                        especie=texto;
+                    }
+                    if(etiqueta.compareTo("raza")==0){
+                        m.setRaza(lectorxml.nextText());
+                        raza=texto;
+                    }
+                    if(etiqueta.compareTo("biografia")==0){
+                        m.setBiografia(lectorxml.nextText());
+                    }
+                }
+                if(evento == XmlPullParser.END_TAG){
+                    String etiqueta = lectorxml.getName();
+                    if(etiqueta.compareTo("mascota")==0){
+                        mascotas.add(m);
+                        m=new Mascota();
+                    }
+                }
+                evento = lectorxml.next();
+            }
 
+
+        }catch(Exception e){}
     }
 
 }
