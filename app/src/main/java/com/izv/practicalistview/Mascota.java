@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by rober on 12/10/2014.
  */
-public class Mascota implements Comparable<Mascota>, Parcelable,Serializable {
+public class Mascota implements Comparable<Mascota>,Serializable {
 
     private String nombre;
     private String especie;
@@ -82,39 +82,6 @@ public class Mascota implements Comparable<Mascota>, Parcelable,Serializable {
     public int hashCode() {
         return super.hashCode();
     }
-
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(this.nombre);
-        parcel.writeString(this.especie);
-        parcel.writeString(this.raza);
-        parcel.writeString(this.biografia);
-    }
-
-    public static final Parcelable.Creator<Mascota> CREATOR = new Parcelable.Creator<Mascota>() {
-        @Override
-        public Mascota createFromParcel(Parcel p) {
-            String nombre = p.readString();
-            String especie = p.readString();
-            String raza = p.readString();
-            String biografia = p.readString();
-            Mascota m = new Mascota(nombre, raza,especie);
-            m.setBiografia(biografia);
-            return m;
-            //return new Contacto(p);
-        }
-
-        @Override
-        public Mascota[] newArray(int i) {
-            return new Mascota[i];
-        }
-    };
 
     public boolean equals(Object o) {
         if (this == o) return true;

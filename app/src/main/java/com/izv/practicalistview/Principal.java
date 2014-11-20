@@ -177,7 +177,7 @@ public class Principal extends Activity {
     /***********************************************************************************/
     /***********************************************************************************/
 
-    private boolean anadir(){
+    /*private boolean anadir(){
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.anadir);
@@ -219,9 +219,9 @@ public class Principal extends Activity {
         alert.show();
         //tostada("Elemento añadido");
         return true;
-    }
+    }*/
 
-    public boolean modificar(final int index){
+    /*public boolean modificar(final int index){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.modificar);
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -269,7 +269,7 @@ public class Principal extends Activity {
         //tostada("Elemento añadido");
         return true;
 
-    }
+    }*/
 
     /***********************************************************************************/
     /***********************************************************************************/
