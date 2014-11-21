@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".Principal"
-    android:background="#FF949FFF">
+    android:background="@drawable/fondo">
 
     <TextView
         android:text="@string/titulo"

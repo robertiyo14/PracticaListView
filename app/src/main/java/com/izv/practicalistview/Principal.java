@@ -367,25 +367,17 @@ public class Principal extends Activity {
             lectorxml.setInput(new FileInputStream(new File(getExternalFilesDir(null), "mascotas.xml")), "utf-8");
             int evento = lectorxml.getEventType();
             Mascota m = new Mascota();
-            String nombre="";
-            String especie="";
-            String raza="";
-            String biografia="";
             while(evento != XmlPullParser.END_DOCUMENT){
                 if(evento == XmlPullParser.START_TAG){
                     String etiqueta = lectorxml.getName();
-                    String texto="";
                     if(etiqueta.compareTo("nombre")==0){
                         m.setNombre(lectorxml.nextText());
-                        nombre=texto;
                     }
                     if(etiqueta.compareTo("especie")==0){
                         m.setEspecie(lectorxml.nextText());
-                        especie=texto;
                     }
                     if(etiqueta.compareTo("raza")==0){
                         m.setRaza(lectorxml.nextText());
-                        raza=texto;
                     }
                     if(etiqueta.compareTo("biografia")==0){
                         m.setBiografia(lectorxml.nextText());
@@ -400,8 +392,6 @@ public class Principal extends Activity {
                 }
                 evento = lectorxml.next();
             }
-
-
         }catch(Exception e){}
     }
 
